@@ -1,4 +1,5 @@
 # Producer Consumer
 
-Estudo sobre a implementação de apps distribuídos (produtor/consumidor) utilizando
-Celery + RabbitMQ e Vagrant para o deploy.
+
+Learning about building distributed apps (producer/consumer) using Celey + RabbitMQ and
+Vagrant VM to deployment.
