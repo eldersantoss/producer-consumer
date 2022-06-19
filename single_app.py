@@ -1,11 +1,15 @@
 import logging
 
-import tasks
+from core import test_tasks, bot_tasks
 
 
 if __name__ == "__main__":
-    logging.info("Starting single app")
-    tasks.slow_hello_world()
-    tasks.do_operation_on_calculator_and_record_result("7*9=")
-    tasks.get_website_screenshot("https://ge.globo.com")
-    logging.info("Stoping single app")
+    logging.info("Starting distributed app")
+
+    test_tasks.slow_hello_world()
+    test_tasks.return_something()
+
+    bot_tasks.do_operation_on_calculator_and_record_result("7*9=")
+    bot_tasks.get_website_screenshot("https://ge.globo.com")
+
+    logging.info("Stoping distributed app")

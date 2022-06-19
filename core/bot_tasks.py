@@ -1,9 +1,6 @@
 import logging
-from time import sleep
 from pathlib import Path
 from subprocess import Popen
-
-from celery import Celery
 
 from selenium.webdriver import Remote
 from selenium.webdriver import Chrome
@@ -12,21 +9,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
-
-app = Celery("tasks", broker="amqp://192.168.0.12:5672")
+from .celery import app
 
 results_path = Path(__file__).parent.resolve() / "results"
 
 
-@app.task()
-def slow_hello_world(sleep_time: int = 10) -> str:
-    logging.info("Starting the task")
-    sleep(sleep_time)
-    logging.info("Stoping the task")
-    return "Hello, World!"
-
-
-@app.task()
+@app.task
 def do_operation_on_calculator_and_record_result(operation: str) -> None:
     logging.info("Initialing driver server")
     driver_server = Popen("WinAppDriver.exe")
@@ -57,7 +45,7 @@ def do_operation_on_calculator_and_record_result(operation: str) -> None:
     driver_server.terminate()
 
 
-@app.task()
+@app.task
 def get_website_screenshot(url: str) -> None:
 
     logging.info("Initialing WebDriver")
